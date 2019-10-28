@@ -28,21 +28,24 @@ module.exports = {
         exclude: /node_modules/
       },
       {
-        test: /(\.jsx|\.js)$/,
-        use: {
-          loader: 'babel-loader',
-        },
-        exclude: /node_modules/
+        test: /\.vue$/,
+        loader: 'vue-loader'
       },
       {
         test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /node_modules/
+        exclude: /node_modules/,
+        // loader: 'ts-loader',
+        use: [
+          "babel-loader",
+          {
+            loader: "ts-loader",
+            options: { appendTsxSuffixTo: [/\.vue$/] }
+          }
+        ]
       },
       {
-        test: /\.vue$/,
-        loader: 'vue-loader',
-        exclude: /node_modules/
+        test: /\.js$/,
+        loader: 'babel-loader'
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
@@ -78,7 +81,7 @@ module.exports = {
   },
   plugins: [
     new VueLoaderPlugin({
-      log: false
+      log: true
     })
   ],
 };

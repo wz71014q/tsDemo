@@ -80,7 +80,6 @@ const inlineConfig = smp.wrap(
         template: path.resolve(
           __dirname,
           '../../',
-          'projects',
           'index.html'
         ), // template
         minify: {
