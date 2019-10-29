@@ -14,6 +14,7 @@ const chalk = require('chalk');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 
 let port = 3000;
+let isFirstCompile = true;
 
 const app = express();
 
@@ -112,6 +113,7 @@ app.use(
   })
 );
 instance.waitUntilValid(() => {
+  isFirstCompile = false;
   console.log(
     'Your application is running: ' + chalk.green(`http://localhost:${port}\n`)
   );
@@ -123,3 +125,11 @@ checkPort()
   .catch((err) => {
     console.error(err);
   });
+
+compiler.hooks.done.tap('compiling done', stats => {
+  if (!isFirstCompile) {
+    console.log(
+      'Your application is running: ' + chalk.green(`http://localhost:${port}\n`)
+    );
+  }
+})
