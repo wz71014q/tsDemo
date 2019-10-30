@@ -6,9 +6,10 @@ module.exports = {
     ecmaFeatures: {
       jsx: true,
     },
-    parser: 'babel-eslint',
+    // parser: 'babel-eslint',
+    parser: "@typescript-eslint/parser"
   },
-  plugins: ['react', 'vue', 'html'],
+  plugins: ['@typescript-eslint', 'vue', 'html'],
   env: {
     browser: true,
     node: true,

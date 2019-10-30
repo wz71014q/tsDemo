@@ -1,7 +1,10 @@
 <template>
   <div class="picker">
     <div class="change" @click="changeContent">click</div>
-    <div class="picker-item-wrapper" :style="itemStyle">
+    <div
+      class="picker-item-wrapper"
+      :style="wrapperStyle"
+      @touchstart="swiperStart">
       <section
         class="picker-item"
         :key="'section_' + index"
@@ -15,13 +18,16 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator';
 
 @Component({
   name: 'Picker'
 })
 export default class Picker extends Vue {
   private restore = true;
+  private swiper = {
+    radio: 100,
+  };
   private dataList: object[] = [
     {
       content: '1',
@@ -42,34 +48,34 @@ export default class Picker extends Vue {
     {
       content: '5',
       align: 'center'
-    }
+    },
+    {
+      content: '6',
+      align: 'center'
+    },
+    {
+      content: '7',
+      align: 'center'
+    },
   ];
-  get itemStyle(): object {
-    let res = {};
-    res = this.restore ? {
-        transform: `rotateY(0deg)`
-      } : {
-        transform: `rotateY(50deg)`
-      }
+  get wrapperStyle(): string {
+    const res = this.restore ? 'transform: rotateY(0deg)' : 'transform: rotateY(50deg)';
     return res;
   }
-  public setItemStyle(index: number, length: number): object {
+  private setItemStyle(index: number, length: number): string {
     let res;
     if (this.restore === true) {
-      res = {
-        position: 'absolute',
-        transform: `rotateX(0deg) translateZ(0px)`,
-      };
+      res = 'transform: rotateX(0deg) translateZ(0px)';
     } else {
-      res = {
-        position: 'absolute',
-        transform: `rotateX(${(360 / length) * index}deg) translateZ(${100}px)`,
-      };
+      res = `transform: rotateX(${(360 / length) * index}deg) translateZ(${this.swiper.radio}px)`;
     }
     return res;
   }
-  public changeContent(): void {
+  private changeContent(): void {
     this.restore = !this.restore;
+  }
+  private swiperStart(event: any) {
+    console.log(event);
   }
 }
 </script>
@@ -77,6 +83,7 @@ export default class Picker extends Vue {
 <style lang="scss" scoped>
 .picker {
   text-align: center;
+  user-select: none;
 }
 .change {
   margin: 0 auto;
@@ -85,7 +92,7 @@ export default class Picker extends Vue {
   width: 50px;
   height: 45px;
   background: #ccc;
-  &:hover {
+  &:active {
     cursor: pointer;
     background-color: aqua;
   }
@@ -98,6 +105,7 @@ export default class Picker extends Vue {
   transition: all 1s ease;
 }
 .picker-item {
+  position: absolute;
   margin: 0 auto;
   width: 60px;
   height: 40px;
