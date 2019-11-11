@@ -1,5 +1,5 @@
 module.exports = {
-  extends: ['airbnb', 'prettier'],
+  extends: ['airbnb', 'plugin:vue/strongly-recommended'],
   parserOptions: {
     ecmaVersion: 6,
     sourceType: 'module',
@@ -58,5 +58,40 @@ module.exports = {
     'global-require': 'off',
     'import/extensions': 'off',
     'jsx-a11y/click-events-have-key-events': 0,
+    // vue规则：https://eslint.vuejs.org/rules/
+    "vue/html-closing-bracket-newline": 0, // vue html标签'>'不需要换行
+    "vue/html-self-closing": 0, // 禁止强制自闭合HTML标签
+    "vue/max-attributes-per-line": [2, { // 属性超过5个强制换行
+      "singleline": 5,
+      "multiline": {
+        "max": 5,
+        "allowFirstLine": false
+      }
+    }],
+    "vue/order-in-components": [2, { // vue 按照官方推荐页面元素顺序排序
+      "order": [
+        "el",
+        "name",
+        "parent",
+        "functional",
+        ["delimiters", "comments"],
+        ["components", "directives", "filters"],
+        "extends",
+        "mixins",
+        "inheritAttrs",
+        "model",
+        ["props", "propsData"],
+        "fetch",
+        "asyncData",
+        "data",
+        "computed",
+        "watch",
+        "LIFECYCLE_HOOKS",
+        "methods",
+        "head",
+        ["template", "render"],
+        "renderError"
+      ]
+    }]
   },
 };

@@ -122,15 +122,15 @@ export default class Picker extends Vue {
   user-select: none;
 }
 .change {
-  margin: 0 auto;
-  margin-top: 100px;
   display: inline-block;
   width: 50px;
   height: 45px;
+  margin: 0 auto;
+  margin-top: 100px;
   background: #ccc;
   &:active {
-    cursor: pointer;
     background-color: aqua;
+    cursor: pointer;
   }
 }
 .picker-item-wrapper {
@@ -142,9 +142,9 @@ export default class Picker extends Vue {
 }
 .picker-item {
   position: absolute;
-  margin: 0 auto;
   width: 60px;
   height: 40px;
+  margin: 0 auto;
   background-color: aliceblue;
   transition: all 1s ease;
   &:first-child {
