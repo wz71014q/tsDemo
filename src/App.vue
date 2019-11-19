@@ -19,7 +19,7 @@ export default class App extends Vue {}
 
 <style lang="scss">
 body {
-  font-size: 14px;
   margin: 0;
+  font-size: 14px;
 }
 </style>

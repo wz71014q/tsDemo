@@ -2,7 +2,6 @@ module.exports = {
   extends: [
     'stylelint-config-standard',
     'stylelint-config-rational-order',
-    'stylelint-config-prettier',
   ],
   configBasedir: './',
   plugins: ['stylelint-scss', 'stylelint-declaration-block-no-ignored-properties'],
