@@ -8,7 +8,6 @@ const merge = require('webpack-merge');
 const ora = require('ora');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const shell = require('shelljs');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const speedMeasurePlugin = require('speed-measure-webpack-plugin');

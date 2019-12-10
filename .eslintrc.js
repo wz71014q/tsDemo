@@ -1,5 +1,5 @@
 module.exports = {
-  extends: ['airbnb', 'plugin:vue/recommended'],
+  extends: ['plugin:vue/strongly-recommended', '@vue/airbnb'],
   parserOptions: {
     ecmaVersion: 6,
     sourceType: 'module',
