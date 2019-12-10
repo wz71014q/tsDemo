@@ -78,14 +78,12 @@ const inlineConfig = smp.wrap(
       new HtmlWebpackPlugin({
         template: path.resolve(
           __dirname,
-          '../../',
-          'index.html'
+          '../../index.html'
         ), // template
         minify: {
           removeAttributeQuotes: true, // 删除注释
           collapseWhitespace: true //删除空白符与换行符
         },
-        hash: true,
         filename: 'index.html'
       }),
       new FriendlyErrorsPlugin({
