@@ -6,7 +6,7 @@ module.exports = {
   output: {
     publicPath: './',
     path: path.resolve(__dirname, '../../dist'), // 打包后的文件存放的地方
-    filename: '[name].[chunkhash:8].js'// 打包后输出文件的文件名
+    filename: '[name].[hash:8].js'// 打包后输出文件的文件名
   },
   resolve: {
     extensions: ['.js', '.vue', '.json', '.jsx', '.ts', '.tsx'],
