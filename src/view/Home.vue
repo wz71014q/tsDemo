@@ -6,8 +6,7 @@
         class="picker-item"
         :key="'section_' + index"
         v-for="(item, index) in dataList"
-        :style="setItemStyle(index, dataList.length)"
-      >
+        :style="setItemStyle(index, dataList.length)">
         {{ item.content }}
       </section>
     </div>
@@ -16,14 +15,17 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import { round } from '../utils/math'
 
 @Component({
   name: 'Picker',
 })
 export default class Picker extends Vue {
   private restore = true;
+  private directionTop = true;
   private swiper = {
     radio: 100,
+    rotationAmount: 0,
     startPoint: [0, 0],
     movingPoint: [0, 0],
     endPoint: [0, 0],
@@ -59,7 +61,9 @@ export default class Picker extends Vue {
     },
   ];
   get wrapperStyle(): string {
-    const res = this.restore ? 'transform: rotateY(0deg)' : 'transform: rotateY(30deg)';
+    const direction = this.directionTop ? '' : '-'
+    const res = this.restore
+      ? 'transform: rotateY(0deg)' : `transform: rotateY(30deg) rotateX(${direction}${this.swiper.rotationAmount}deg)`;
     return res;
   }
   private mounted() {
@@ -103,6 +107,8 @@ export default class Picker extends Vue {
       myEvent.clientX || myEvent.targetTouches[0].pageX,
       myEvent.clientY || myEvent.targetTouches[0].pageY,
     ];
+    this.directionTop = this.swiper.movingPoint[1] < this.swiper.movingPoint[1]
+    this.swiper.rotationAmount = this.getRotation(this.swiper.movingPoint[1], this.swiper.movingPoint[1], this.swiper.radio);
   }
   private swiperEnd(event: any) {
     const myEvent = event || window.event;
@@ -110,45 +116,19 @@ export default class Picker extends Vue {
       myEvent.clientX || myEvent.changedTouches[0].pageX,
       myEvent.clientY || myEvent.changedTouches[0].pageY,
     ];
-    console.log('X-axis', this.swiper.endPoint[1] - this.swiper.startPoint[1]);
-    console.log('Y-axis', this.swiper.endPoint[0] - this.swiper.startPoint[0]);
+    console.log('X-axis', this.swiper.endPoint[0] - this.swiper.startPoint[0]);
+    console.log('Y-axis', this.swiper.endPoint[1] - this.swiper.startPoint[1]);
+    this.directionTop = this.swiper.endPoint[1] < this.swiper.startPoint[1]
+    this.swiper.rotationAmount = this.getRotation(this.swiper.startPoint[1], this.swiper.endPoint[1], this.swiper.radio);
+    console.log('this.swiper.rotationAmount', this.swiper.rotationAmount);
+  }
+  private getRotation(start: number, end: number, radio: number) {
+    const distance = Math.abs(end - start);
+    return round(180 / Math.PI * Math.asin(distance / radio * 2), 2);
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.picker {
-  text-align: center;
-  user-select: none;
-}
-.change {
-  display: inline-block;
-  width: 50px;
-  height: 45px;
-  margin: 0 auto;
-  margin-top: 100px;
-  background: #ccc;
-  &:active {
-    background-color: aqua;
-    cursor: pointer;
-  }
-}
-.picker-item-wrapper {
-  position: relative;
-  margin-top: 100px;
-  transform-style: preserve-3d;
-  perspective-origin: 150% 150%;
-  transition: all 1s ease;
-}
-.picker-item {
-  position: absolute;
-  width: 60px;
-  height: 40px;
-  margin: 0 auto;
-  background-color: aliceblue;
-  transition: all 1s ease;
-  &:first-child {
-    z-index: 1;
-  }
-}
+@import "../style/index";
 </style>
