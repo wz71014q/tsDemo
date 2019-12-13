@@ -44,7 +44,13 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        loader: 'babel-loader'
+        use: [
+          'babel-loader',
+          {
+            loader: 'eslint-loader',
+            options: { fix: true }
+          }
+        ]
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,

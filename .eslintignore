@@ -1,5 +1,6 @@
 # 依赖
 **/node_modules/
+webpack
 
 # 打包输出目录
 **/dist/

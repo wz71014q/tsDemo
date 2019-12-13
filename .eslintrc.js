@@ -1,18 +1,17 @@
 module.exports = {
-  parser: '@typescript-eslint/parser', //定义ESLint的解析器
-  extends: ['plugin:@typescript-eslint/recommended', '@vue/typescript', 'airbnb-base'], //定义文件继承的子规范
-  plugins: ['@typescript-eslint', 'vue', 'html'], //定义了该eslint文件所依赖的插件
+  root: true,
   env: {
-    browser: true,
     node: true
   },
+  extends: ['@vue/typescript', 'plugin:@typescript-eslint/recommended', 'airbnb-base'],
+  plugins: ['vue', 'html', '@typescript-eslint'],
   parserOptions: {
     ecmaVersion: 2019,
     sourceType: 'module',
     ecmaFeatures: {
       jsx: true
     },
-    // parser: 'babel-eslint'
+    parser: '@typescript-eslint/parser'
   },
   settings: {
     'import/resolver': {
@@ -21,4 +20,7 @@ module.exports = {
       }
     }
   },
+  rules: {
+    'no-mixed-operators': 0
+  }
 };

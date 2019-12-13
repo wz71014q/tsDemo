@@ -15,7 +15,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { round } from '../utils/math'
+import round from '../utils/math'
 
 @Component({
   name: 'Picker',
