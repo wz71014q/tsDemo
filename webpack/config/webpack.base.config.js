@@ -28,6 +28,20 @@ module.exports = {
         exclude: /node_modules/
       },
       {
+        enforce: 'pre',
+        test: /\.(vue|(j|t)sx?)$/,
+        exclude: /node_modules/,
+        loader: 'eslint-loader',
+        options: {
+          cache: true,
+          fix: true,
+          emitError: true,
+          emitWarning: true,
+          failOnError: false,
+          failOnWarning: false
+        }
+      },
+      {
         test: /\.vue$/,
         loader: 'vue-loader'
       },
@@ -39,17 +53,14 @@ module.exports = {
           {
             loader: "ts-loader",
             options: { appendTsxSuffixTo: [/\.vue$/] }
-          }
+          },
         ]
       },
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
         use: [
-          'babel-loader',
-          {
-            loader: 'eslint-loader',
-            options: { fix: true }
-          }
+          'babel-loader'
         ]
       },
       {

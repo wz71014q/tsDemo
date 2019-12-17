@@ -15,14 +15,16 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import round from '../utils/math'
+import round from '../utils/math';
 
 @Component({
   name: 'Picker',
 })
 export default class Picker extends Vue {
   private restore = true;
+
   private directionTop = true;
+
   private swiper = {
     radio: 100,
     rotationAmount: 0,
@@ -30,6 +32,7 @@ export default class Picker extends Vue {
     movingPoint: [0, 0],
     endPoint: [0, 0],
   };
+
   private dataList: object[] = [
     {
       content: '1',
@@ -60,12 +63,14 @@ export default class Picker extends Vue {
       align: 'center',
     },
   ];
+
   get wrapperStyle(): string {
-    const direction = this.directionTop ? '' : '-'
+    const direction = this.directionTop ? '' : '-';
     const res = this.restore
       ? 'transform: rotateY(0deg)' : `transform: rotateY(30deg) rotateX(${direction}${this.swiper.rotationAmount}deg)`;
     return res;
   }
+
   private mounted() {
     const selfPickerWrapper: any = this.$refs.pickerWrapper;
     selfPickerWrapper.addEventListener('touchstart', this.swiperStart, {
@@ -73,6 +78,7 @@ export default class Picker extends Vue {
       capture: false,
     });
   }
+
   private setItemStyle(index: number, length: number): string {
     let res;
     if (this.restore === true) {
@@ -82,9 +88,11 @@ export default class Picker extends Vue {
     }
     return res;
   }
+
   private changeContent(): void {
     this.restore = !this.restore;
   }
+
   private swiperStart(event: any) {
     const myEvent = event || window.event;
     const selfPickerWrapper: any = this.$refs.pickerWrapper;
@@ -101,15 +109,17 @@ export default class Picker extends Vue {
       capture: false,
     });
   }
+
   private swiperMoving(event: any) {
     const myEvent = event || window.event;
     this.swiper.movingPoint = [
       myEvent.clientX || myEvent.targetTouches[0].pageX,
       myEvent.clientY || myEvent.targetTouches[0].pageY,
     ];
-    this.directionTop = this.swiper.movingPoint[1] < this.swiper.movingPoint[1]
+    this.directionTop = this.swiper.movingPoint[1] < this.swiper.movingPoint[1];
     this.swiper.rotationAmount = this.getRotation(this.swiper.movingPoint[1], this.swiper.movingPoint[1], this.swiper.radio);
   }
+
   private swiperEnd(event: any) {
     const myEvent = event || window.event;
     this.swiper.endPoint = [
@@ -118,11 +128,12 @@ export default class Picker extends Vue {
     ];
     console.log('X-axis', this.swiper.endPoint[0] - this.swiper.startPoint[0]);
     console.log('Y-axis', this.swiper.endPoint[1] - this.swiper.startPoint[1]);
-    this.directionTop = this.swiper.endPoint[1] < this.swiper.startPoint[1]
+    this.directionTop = this.swiper.endPoint[1] < this.swiper.startPoint[1];
     this.swiper.rotationAmount = this.getRotation(this.swiper.startPoint[1], this.swiper.endPoint[1], this.swiper.radio);
     console.log('this.swiper.rotationAmount', this.swiper.rotationAmount);
   }
-  private getRotation(start: number, end: number, radio: number) {
+
+  private static getRotation(start: number, end: number, radio: number): number {
     const distance = Math.abs(end - start);
     return round(180 / Math.PI * Math.asin(distance / radio * 2), 2);
   }
