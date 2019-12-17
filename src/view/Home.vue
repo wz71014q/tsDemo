@@ -21,6 +21,10 @@ import round from '../utils/math';
   name: 'Picker',
 })
 export default class Picker extends Vue {
+  $refs!: {
+    pickerWrapper: HTMLFormElement;
+  };
+
   private restore = true;
 
   private directionTop = true;
@@ -71,8 +75,8 @@ export default class Picker extends Vue {
     return res;
   }
 
-  private mounted() {
-    const selfPickerWrapper: any = this.$refs.pickerWrapper;
+  private mounted(): void {
+    const selfPickerWrapper = this.$refs.pickerWrapper;
     selfPickerWrapper.addEventListener('touchstart', this.swiperStart, {
       passive: false,
       capture: false,
@@ -93,44 +97,52 @@ export default class Picker extends Vue {
     this.restore = !this.restore;
   }
 
-  private swiperStart(event: any) {
+  private swiperStart(event: TouchEvent): void {
     const myEvent = event || window.event;
-    const selfPickerWrapper: any = this.$refs.pickerWrapper;
+    const selfPickerWrapper = this.$refs.pickerWrapper;
     this.swiper.startPoint = [
-      myEvent.clientX || myEvent.targetTouches[0].pageX,
-      myEvent.clientY || myEvent.targetTouches[0].pageY,
+      myEvent.targetTouches[0].pageX,
+      myEvent.targetTouches[0].pageY,
     ];
     selfPickerWrapper.addEventListener('touchmove', this.swiperMoving, {
       passive: false,
       capture: false,
     });
-    selfPickerWrapper.addEventListener('touchend', this.swiperEnd, {
+    (selfPickerWrapper as HTMLElement).addEventListener('touchend', this.swiperEnd, {
       passive: false,
       capture: false,
     });
   }
 
-  private swiperMoving(event: any) {
+  private swiperMoving(event: TouchEvent): void {
     const myEvent = event || window.event;
     this.swiper.movingPoint = [
-      myEvent.clientX || myEvent.targetTouches[0].pageX,
-      myEvent.clientY || myEvent.targetTouches[0].pageY,
+      myEvent.targetTouches[0].pageX,
+      myEvent.targetTouches[0].pageY,
     ];
-    this.directionTop = this.swiper.movingPoint[1] < this.swiper.movingPoint[1];
-    this.swiper.rotationAmount = this.getRotation(this.swiper.movingPoint[1], this.swiper.movingPoint[1], this.swiper.radio);
+    this.directionTop = (myEvent.targetTouches[0].pageY)
+    < this.swiper.movingPoint[1];
+    this.swiper.rotationAmount = Picker.getRotation(
+      this.swiper.movingPoint[1],
+      this.swiper.movingPoint[1], this.swiper.radio
+    );
   }
 
-  private swiperEnd(event: any) {
+  // TODO 兼容MouseEvent
+  private swiperEnd(event: TouchEvent): void {
     const myEvent = event || window.event;
     this.swiper.endPoint = [
-      myEvent.clientX || myEvent.changedTouches[0].pageX,
-      myEvent.clientY || myEvent.changedTouches[0].pageY,
+      myEvent.changedTouches[0].pageX,
+      myEvent.changedTouches[0].pageY,
     ];
-    console.log('X-axis', this.swiper.endPoint[0] - this.swiper.startPoint[0]);
-    console.log('Y-axis', this.swiper.endPoint[1] - this.swiper.startPoint[1]);
+    // console.log('X-axis', this.swiper.endPoint[0] - this.swiper.startPoint[0]);
+    // console.log('Y-axis', this.swiper.endPoint[1] - this.swiper.startPoint[1]);
     this.directionTop = this.swiper.endPoint[1] < this.swiper.startPoint[1];
-    this.swiper.rotationAmount = this.getRotation(this.swiper.startPoint[1], this.swiper.endPoint[1], this.swiper.radio);
-    console.log('this.swiper.rotationAmount', this.swiper.rotationAmount);
+    this.swiper.rotationAmount = Picker.getRotation(
+      this.swiper.startPoint[1],
+      this.swiper.endPoint[1], this.swiper.radio
+    );
+    // console.log('this.swiper.rotationAmount', this.swiper.rotationAmount);
   }
 
   private static getRotation(start: number, end: number, radio: number): number {
