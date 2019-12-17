@@ -5,6 +5,7 @@ module.exports = {
   },
   extends: ['@vue/typescript', 'plugin:@typescript-eslint/recommended', 'airbnb-base'],
   plugins: ['vue', 'html', '@typescript-eslint'],
+  parser: "vue-eslint-parser",
   parserOptions: {
     ecmaVersion: 2019,
     sourceType: 'module',
@@ -21,6 +22,7 @@ module.exports = {
     }
   },
   rules: {
-    'no-mixed-operators': 0
+    'no-mixed-operators': 0,
+    'comma-dangle': 0,
   }
 };

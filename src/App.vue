@@ -9,7 +9,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import Home from './view/Home.vue';
 
 @Component({
-  name: "App",
+  name: 'App',
   components: {
     Home
   }
