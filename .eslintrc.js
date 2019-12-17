@@ -22,13 +22,13 @@ module.exports = {
       node: {
         extensions: ['.js', '.vue', '.jsx', '.ts', '.tsx']
       }
-    ,
+    },
     'import/extensions': [
       '.js',
       '.ts',
       '.jsx',
       '.tsx'
-    ],
+    ]
   },
   rules: {
     'no-mixed-operators': 0,
