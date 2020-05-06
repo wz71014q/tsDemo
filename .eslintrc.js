@@ -4,7 +4,7 @@ module.exports = {
     node: true
   },
   extends: ['@vue/typescript', 'airbnb-base'],
-  plugins: ['vue', 'html', '@typescript-eslint'],
+  plugins: ['vue', 'html'],
   globals: {
     window: true
   },
