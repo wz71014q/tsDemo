@@ -4,14 +4,21 @@ module.exports = {
   plugins: [
     require('autoprefixer'),
     require('precss'),
-    // pxtorem({
-    //   rootValue: 10,
-    //   unitPrecision: 3,
-    //   propList: ['*', '!border*'],
-    //   selectorBlackList: [],
-    //   replace: true,
-    //   mediaQuery: false,
-    //   minPixelValue: 0
-    // })
+    pxtorem({
+      rootValue: 100,
+      unitPrecision: 5,
+      propList: [
+        '*',
+        '!font-size',
+        '!letter-space',
+        '!border',
+        '!border-width',
+        '!border-top-width',
+        '!border-right-width',
+        '!border-bottom-width',
+        '!border-left-width'
+      ],
+      selectorBlackList: []
+    })
   ]
 };

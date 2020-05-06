@@ -4,3 +4,10 @@ webpack
 
 # 打包输出目录
 **/dist/
+
+# 配置文件
+vue.config.js
+postcss.config.js
+prettier.config.js
+.eslintrc.js
+sylelint.config.js

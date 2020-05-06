@@ -3,7 +3,7 @@ module.exports = {
   env: {
     node: true
   },
-  extends: ['@vue/typescript', 'plugin:@typescript-eslint/recommended', 'airbnb-base'],
+  extends: ['@vue/typescript', 'airbnb-base'],
   plugins: ['vue', 'html', '@typescript-eslint'],
   globals: {
     window: true
@@ -42,5 +42,15 @@ module.exports = {
     ],
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-  }
+    "@typescript-eslint/explicit-function-return-type": "off"
+  },
+  "overrides": [
+    {
+      // enable the rule specifically for TypeScript files
+      "files": ["*.ts", "*.tsx"],
+      "rules": {
+        "@typescript-eslint/explicit-function-return-type": ["error"]
+      }
+    }
+  ]
 };

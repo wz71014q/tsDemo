@@ -15,6 +15,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import { f1, f2 } from '../utils/test';
 import round from '../utils/math';
 
 @Component({
@@ -76,6 +77,7 @@ export default class Picker extends Vue {
   }
 
   private mounted(): void {
+    console.log(f1(1, 2), f2(3, 1));
     const selfPickerWrapper = this.$refs.pickerWrapper;
     selfPickerWrapper.addEventListener('touchstart', this.swiperStart, {
       passive: false,
